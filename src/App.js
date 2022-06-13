@@ -11,14 +11,14 @@ import Inicio from "./components/Inicio";
 function App() {
   return (
     <div className="App">
-      <h1>Postres Adry</h1>
+      <h1>Crud Firebase</h1>
        
 <Router>
       <Routes>
         <Route path="/" element={ <Show />} />
           <Route path="/create" element={ <Create />} />
             
-          <Route path="/editar/:id" element={ <Edit />} />
+          <Route path="/editar/:id" element={ <Edit  />} />
           <Route path='*' element={<Navigate replace to="/"/>} />
         </Routes>
 

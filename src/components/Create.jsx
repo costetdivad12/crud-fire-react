@@ -45,6 +45,7 @@ const Create = () => {
                   value={Nombre}
                   className="form-control"
                   onChange={nombres}
+                  placeholder="Nombre"
                 />
               </div>
               <div className="mb-3">
@@ -54,6 +55,7 @@ const Create = () => {
                   value={Stock}
                   className="form-control"
                   onChange={stocks}
+                  placeholder="cantidad"
                 />
               </div>
 
