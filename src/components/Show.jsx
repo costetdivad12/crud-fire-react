@@ -12,36 +12,33 @@ import {
   getDoc,
   deleteDoc,
   doc,
-  onSnapshot
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../FirebaseConfig/FirebaseConf";
 import Swal from "sweetalert2/dist/sweetalert2.js";
-import { useCollection } from 'react-firebase-hooks/firestore';
+import { useCollection } from "react-firebase-hooks/firestore";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Show = () => {
   const [Products, setProducts] = useState([]);
+
   //   const [value, loading, error] = useCollection(
   //   collection(db, "products"),
   //   {
-  //     snapshotListenOptions: { includeMetadataChanges: true },      
+  //     snapshotListenOptions: { includeMetadataChanges: true },
   //   }
   // );
- 
-    // setInterval(()=>{
-    //   value && setProducts( value.docs.map((data) => ({ ...data.data(), id: data.id })));
-    // },500)
-    
-   
-    
-    // console.log(Products)
+
+  // setInterval(()=>{
+  //   value && setProducts( value.docs.map((data) => ({ ...data.data(), id: data.id })));
+  // },500)
+
+  // console.log(Products)
   // const collectionProduct = collection(db, "products");
 
-  const getProducts = async () => {
-    
+  const getProducts = async () => {};
 
-    
-  };
-  
   const deleteProducts = async (id) => {
     const productDoc = doc(db, "products", id);
     await deleteDoc(productDoc);
@@ -50,46 +47,37 @@ const Show = () => {
 
   const confirDelete = (id) => {
     Swal.fire({
-      title: "Remover el producto?",
-      text: "You won't be able to revert this!",
+      title: "Eliminar Producto?",
+      text: "Deseas eliminar el producto",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Si, Eliminar!",
     }).then((result) => {
       if (result.isConfirmed) {
         deleteProducts(id);
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        Swal.fire("Eliminado!", "El producto se ha eliminado !!", "success");
       }
     });
   };
-  //   console.log(Products);
 
-
-    useEffect(() => {
-      onSnapshot( collection(db, "products"),(querySnap)=>{
-        const Prod=[];
-        querySnap.forEach((doc) => {
-          Prod.push({...doc.data(), id: doc.id });
-          
+  useEffect(() => {
+    onSnapshot(collection(db, "products"), (querySnap) => {
+      const Prod = [];
+      querySnap.forEach((doc) => {
+        Prod.push({ ...doc.data(), id: doc.id });
       });
-    
+
       setProducts(Prod);
+    });
+  }, []);
 
-   
-
-    })
-      
-    }, []);
-
-  
+  console.log(Products);
 
   return (
     <>
-      
       <div className="container">
-      
         <div className="row">
           <div className="col">
             <div className="d-grid gap-2">
@@ -106,9 +94,7 @@ const Show = () => {
                 </tr>
               </thead>
               <tbody>
-             
-                {   Products.map((product) => (
-                  
+                {Products.map((product) => (
                   <tr key={product.id}>
                     <td>{product.nombre}</td>
                     <td>{product.stock}</td>
@@ -117,7 +103,7 @@ const Show = () => {
                         to={`/editar/${product.id}`}
                         className="btn btn-warning mt-2 mb-2"
                       >
-                        Editar
+                        <FontAwesomeIcon icon="fa-regular fa-pen-to-square" />
                       </Link>
                       <button
                         onClick={() => {
@@ -125,7 +111,7 @@ const Show = () => {
                         }}
                         className="btn btn-success"
                       >
-                        Eliminar
+                        <FontAwesomeIcon icon="fa-regular fa-trash-can" />
                       </button>
                     </td>
                   </tr>
@@ -135,8 +121,6 @@ const Show = () => {
           </div>
         </div>
       </div>
-      
-        
     </>
   );
 };
